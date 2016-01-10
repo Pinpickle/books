@@ -1,0 +1,24 @@
+{
+  "name": "books",
+  "version": "0.0.0",
+  "description": "Easily create documents using web technologies",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pinpickle/books.git"
+  },
+  "keywords": [
+    "pdf",
+    "markdown",
+    "html"
+  ],
+  "author": "christian@decodehub.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pinpickle/books/issues"
+  },
+  "homepage": "https://github.com/pinpickle/books#readme"
+}
