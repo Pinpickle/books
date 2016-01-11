@@ -1,7 +1,8 @@
 var markdown = require('markdown-it')({ html: true, linkify: true, typographer: true })
   .use(require('markdown-it-attrs'))
   .use(require('markdown-it-footnote'))
-  .use(require('markdown-it-math'));
+  .use(require('markdown-it-math'))
+  .use(require('markdown-it-implicit-figures'), { dataType: true, figcaption: true });
 var stylus = require('stylus');
 var childProcess = require('child_process');
 var fs = require('fs');
@@ -18,7 +19,7 @@ var resources = { };
 function loadResources() {
   resources.css = stylus(fs.readFileSync(path.join(__dirname, 'styles/main.styl'), 'utf8'))
     .set('filename', 'main.css')
-    .set('paths', [path.join(__dirname, 'styles')])
+    .set('paths', [path.join(__dirname, 'styles'), path.join(__dirname, 'node_modules')])
     .render();
 
   resources.template = handlebars.compile(fs.readFileSync(path.join(__dirname, 'page.html'), 'utf8'));
@@ -44,6 +45,7 @@ exports.htmlToPDFStream = function htmlToPDFStream(html) {
 exports.markdownToFile = function markdownToFile(md, fileName) {
   exports.renderHTML(md)
     .then((html) => {
+      fs.writeFileSync('test.html', html);
       var stream = exports.htmlToPDFStream(html);
       var file = fs.createWriteStream(path.join(process.cwd(), fileName));
       stream.pipe(file);

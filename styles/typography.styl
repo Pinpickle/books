@@ -1,0 +1,227 @@
+/* ==========================================================================
+   CSS Typography
+   ========================================================================== */
+
+/* Base Styles
+   ========================================================================== */
+
+html {
+  font-family: $fontBody;
+  font-weight: $fontWeightBody;
+  color: $textColor;
+  // 1rem = 10px
+  font-size: 9pt;
+}
+
+body {
+  line-height: 1.8;
+  counter-reset: h1, figure;
+}
+
+
+.margin-element {
+  margin-bottom: 1em;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+/* Body Copy
+   ========================================================================== */
+
+ h1, h2, h3, h4, h5, h6 {
+   font-family: $fontHeading;
+   color: $headingColor;
+   margin-top: 0;
+   margin-bottom: 2rem;
+   font-weight: 300;
+
+   .small {
+     font-size: 0.8em;
+     opacity: 0.8;
+   }
+ }
+
+ h1 {
+   font-size: 20pt;
+   line-height: 1.2;
+   letter-spacing: -.01em;
+
+   counter-increment: h1;
+   counter-reset: h2;
+
+   &:before {
+     content: counter(h1) ". ";
+   }
+ }
+
+ h2 {
+   font-size: 18pt;
+   line-height: 1.25;
+   letter-spacing: -.01em;
+
+   counter-increment: h2;
+   coutner-reset: h3;
+
+   &:before {
+     content: counter(h1) "." counter(h2) ". ";
+   }
+ }
+
+ h3 {
+   font-size: 18pt;
+   line-height: 1.3;
+   letter-spacing: -.01em;
+
+   counter-increment: h3;
+
+   &:before {
+     content: counter(h1) "." counter(h2) "." counter(h3) ". "
+   }
+ }
+
+ h4 {
+   font-size: 16pt;
+   line-height: 1.35;
+   letter-spacing: -.01em;
+ }
+
+ h5 {
+   font-size: 14pt;
+   line-height: 1.5;
+   letter-spacing: -.01em;
+ }
+
+ h6 {
+   font-size: 12pt;
+   line-height: 1.6;
+   letter-spacing: 0;
+ }
+
+ .no-counter, .document-title {
+   counter-increment: none;
+
+   &:before {
+     content: '';
+   }
+ }
+
+ /* Larger than phablet */
+ @media $small {
+
+ }
+
+ p {
+   margin-top: 0;
+ }
+
+@media $medium {
+
+  .emphasis-paragraph {
+    font-size: 1.5em;
+    font-weight: lighter;
+  }
+
+  .grand-heading {
+    font-size: 3.5em;
+
+    .small {
+      font-size: 0.6em;
+    }
+  }
+}
+
+input,
+textarea,
+select,
+fieldset {
+  margin-bottom: 15pt;
+}
+
+pre,
+blockquote,
+dl,
+figure,
+table,
+p,
+ul,
+ol,
+form,
+math[display="block"] {
+  margin-bottom: 15pt;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $gray-dark;
+}
+
+figure {
+  margin-left: -30pt;
+  margin-right: -30pt;
+  text-align: center;
+  counter-increment: figure;
+
+  > img {
+    max-width: 100%;
+  }
+
+  > figcaption {
+    color: gray(50%);
+    font-style: italic;
+    &:before {
+      content: "Figure " counter(figure) ": "
+    }
+  }
+}
+
+blockquote {
+  border-left: 5px solid $grayLighter;
+  margin-left: -15pt;
+  padding-left: 40pt;
+  font-style: italic;
+
+  cite {
+    font-style: normal;
+    &::before {
+      content: "\2014"
+      margin-right: 5px;
+    }
+  }
+}
+
+hr {
+  display: block;
+  height: 2px;
+  border: none;
+  margin: 3em 0;
+  border-bottom: 1px solid $gray-lighter;
+}
+
+math[display="block"] {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Utility
+   ========================================================================== */
+
+.centre {
+  text-align: center;
+}
+
+.document-title {
+  font-weight: bold;
+  margin-bottom: 4pt;
+  counter-reset: page 1;
+}
+
+.document-meta {
+  font-family: $fontHeading;
+  margin-top: 0;
+}

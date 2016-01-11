@@ -4,9 +4,7 @@
   "description": "Easily create documents using web technologies",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "npm run styles",
-    "styles": "stylus ./styles/main.styl --out styles"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
     "books": "bin/books.js"
@@ -32,7 +30,9 @@
     "markdown-it": "^5.0.0",
     "markdown-it-attrs": "^0.1.8",
     "markdown-it-footnote": "^2.0.0",
+    "markdown-it-implicit-figures": "^0.2.3",
     "markdown-it-math": "^3.0.2",
+    "normalize.css": "^3.0.3",
     "stylus": "^0.53.0",
     "yargs": "^3.31.0"
   }
