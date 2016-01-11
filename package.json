@@ -4,7 +4,12 @@
   "description": "Easily create documents using web technologies",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "npm run styles",
+    "styles": "stylus ./styles/main.styl --out styles"
+  },
+  "bin": {
+    "books": "bin/books.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +25,15 @@
   "bugs": {
     "url": "https://github.com/pinpickle/books/issues"
   },
-  "homepage": "https://github.com/pinpickle/books#readme"
+  "homepage": "https://github.com/pinpickle/books#readme",
+  "dependencies": {
+    "bluebird": "^3.1.1",
+    "handlebars": "^4.0.5",
+    "markdown-it": "^5.0.0",
+    "markdown-it-attrs": "^0.1.8",
+    "markdown-it-footnote": "^2.0.0",
+    "markdown-it-math": "^3.0.2",
+    "stylus": "^0.53.0",
+    "yargs": "^3.31.0"
+  }
 }
