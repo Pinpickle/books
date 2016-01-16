@@ -1,8 +1,7 @@
 var markdown = require('markdown-it')({ html: true, linkify: true, typographer: true })
   .use(require('markdown-it-attrs'))
   .use(require('markdown-it-footnote'))
-  .use(require('markdown-it-math'))
-  .use(require('markdown-it-implicit-figures'), { dataType: true, figcaption: true });
+  .use(require('markdown-it-math'));
 var stylus = require('stylus');
 var childProcess = require('child_process');
 var fs = require('fs');

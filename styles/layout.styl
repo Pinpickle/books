@@ -1,13 +1,35 @@
 @page {
-  margin: 60pt 100pt;
+  margin: 60pt 120pt;
+  padding: 0;
+  size: A4;
 
   @bottom-center {
     content: counter(page);
+    font-family: $fontBody;
+    color: gray(50%);
+    font-size: 9pt;
   }
 }
 
-body {
-  // Gives us some breathing room to expand items
-  padding-left: 20pt;
-  padding-right: 20pt;
+
+@page title_page {
+  margin-top: 200pt;
+}
+
+
+body, html {
+  padding: 0;
+  margin: 0;
+}
+
+.footnote {
+  float: footnote;
+}
+
+.page-break {
+  page-break-after: always;
+}
+
+.title-page {
+  page: title_page;
 }

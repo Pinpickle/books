@@ -165,15 +165,25 @@ figure {
   margin-right: -30pt;
   text-align: center;
   counter-increment: figure;
+  page-break-inside: avoid;
 
-  > img {
+  p {
+    margin-bottom: 5pt;
+  }
+
+  img {
     max-width: 100%;
   }
 
-  > figcaption {
+  figcaption {
     color: gray(50%);
+    font-size: 8pt;
     font-style: italic;
-    &:before {
+    max-width: 8cm;
+    margin-left: auto;
+    margin-right: auto;
+
+    p:before {
       content: "Figure " counter(figure) ": "
     }
   }
@@ -211,7 +221,7 @@ math[display="block"] {
 /* Utility
    ========================================================================== */
 
-.centre {
+.centre, .center {
   text-align: center;
 }
 
@@ -223,5 +233,11 @@ math[display="block"] {
 
 .document-meta {
   font-family: $fontHeading;
+  font-size: 12pt;
   margin-top: 0;
+}
+
+.hanging-indent {
+  padding-left: 20pt;
+  text-indent: -20pt;
 }
