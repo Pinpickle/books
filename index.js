@@ -1,7 +1,4 @@
-var markdown = require('markdown-it')({ html: true, linkify: true, typographer: true })
-  .use(require('markdown-it-attrs'))
-  .use(require('markdown-it-footnote'))
-  .use(require('markdown-it-math'));
+var hljs = require('highlight.js');
 var stylus = require('stylus');
 var childProcess = require('child_process');
 var fs = require('fs');
@@ -9,6 +6,23 @@ var sync = require('synchronize');
 var path = require('path');
 var handlebars = require('handlebars');
 var Promise = require('bluebird');
+var markdown = require('markdown-it')({
+  html: true,
+  linkify: true,
+  typographer: true,
+  highlight: function (str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+        try {
+          return hljs.highlight(lang, str).value;
+        } catch (__) {}
+      }
+
+      return ''; // use external default escaping
+  } })
+  .use(require('markdown-it-attrs'))
+  .use(require('markdown-it-footnote'))
+  .use(require('markdown-it-math'));
+
 
 var loadFile = Promise.promisify(fs.readFile);
 
@@ -19,6 +33,7 @@ function loadResources() {
   resources.css = stylus(fs.readFileSync(path.join(__dirname, 'styles/main.styl'), 'utf8'))
     .set('filename', 'main.css')
     .set('paths', [path.join(__dirname, 'styles'), path.join(__dirname, 'node_modules')])
+    .set('include css', true)
     .render();
 
   resources.template = handlebars.compile(fs.readFileSync(path.join(__dirname, 'page.html'), 'utf8'));
