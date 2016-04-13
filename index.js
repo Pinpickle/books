@@ -6,6 +6,7 @@ var sync = require('synchronize');
 var path = require('path');
 var handlebars = require('handlebars');
 var Promise = require('bluebird');
+var fm = require('front-matter');
 var markdown = require('markdown-it')({
   html: true,
   linkify: true,
@@ -29,12 +30,16 @@ var loadFile = Promise.promisify(fs.readFile);
 // Load resources
 var resources = { };
 
-function loadResources() {
-  resources.css = stylus(fs.readFileSync(path.join(__dirname, 'styles/main.styl'), 'utf8'))
+function renderStylus(content) {
+  return stylus(content)
     .set('filename', 'main.css')
     .set('paths', [path.join(__dirname, 'styles'), path.join(__dirname, 'node_modules')])
     .set('include css', true)
     .render();
+}
+
+function loadResources() {
+  resources.css = renderStylus(fs.readFileSync(path.join(__dirname, 'styles/main.styl'), 'utf8'));
 
   resources.template = handlebars.compile(fs.readFileSync(path.join(__dirname, 'page.html'), 'utf8'));
 }
@@ -42,9 +47,34 @@ function loadResources() {
 loadResources();
 
 exports.renderHTML = function renderHTML(md) {
-  return new Promise((resolve, reject) => {
-    resolve(resources.template({ styles: resources.css, content: markdown.render(md) }));
+  var front = {};
+  var extra = { };
+
+  if (fm.test(md)) {
+    front = fm(md);
+    md = front.body;
+    front = front.attributes;
+  }
+
+  var p = new Promise((resolve, reject) => {
+    resolve();
   });
+
+  if (front.css) {
+    p = p.then(() => loadFile(path.join(process.cwd(), front.css), 'utf8'))
+      .then((content) => {
+        extra.css = renderStylus(content);
+      })
+      .catch(err => {
+        console.log('Could not load external stylesheet');
+        console.log(err);
+      });
+  }
+
+  return p.then(() => new Promise((resolve, reject) => {
+    console.log(extra.css);
+    resolve(resources.template({ styles: resources.css, content: markdown.render(md), css: extra.css }));
+  }));
 };
 
 exports.htmlToPDFStream = function htmlToPDFStream(html) {
