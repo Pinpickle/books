@@ -7,6 +7,8 @@ var path = require('path');
 var handlebars = require('handlebars');
 var Promise = require('bluebird');
 var fm = require('front-matter');
+var katex = require('katex');
+var textzilla = require('texzilla');
 var markdown = require('markdown-it')({
   html: true,
   linkify: true,
@@ -22,7 +24,15 @@ var markdown = require('markdown-it')({
   } })
   .use(require('markdown-it-attrs'))
   .use(require('markdown-it-footnote'))
-  .use(require('markdown-it-math'));
+  .use(require('markdown-it-math'), {
+    inlineRenderer: function(str) {
+      return katex.renderToString(str);
+    },
+    blockRenderer: function(str) {
+      var str = katex.renderToString(str, { displayMode: true });
+      return str;
+    }
+  });
 
 
 var loadFile = Promise.promisify(fs.readFile);
