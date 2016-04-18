@@ -72,8 +72,7 @@ exports.renderHTML = function renderHTML(md) {
   }
 
   return p.then(() => new Promise((resolve, reject) => {
-    console.log(extra.css);
-    resolve(resources.template({ styles: resources.css, content: markdown.render(md), css: extra.css }));
+    resolve(resources.template({ styles: extra.css || resources.css, content: markdown.render(md) }));
   }));
 };
 
