@@ -92,7 +92,7 @@ exports.renderHTML = function renderHTML(md) {
       renderer: "CommonHTML",
       inputs: ["TeX"],
     }, function(result) {
-      resolve(resources.template({ styles: resources.css, content: result.html }));
+      resolve(resources.template({ styles: extra.css || resources.css, content: result.html }));
     });
   }));
 };
