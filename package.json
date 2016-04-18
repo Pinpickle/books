@@ -35,6 +35,7 @@
     "markdown-it-footnote": "^2.0.0",
     "markdown-it-implicit-figures": "^0.2.3",
     "markdown-it-math": "^3.0.2",
+    "mathjax-node": "^0.5.1",
     "normalize.css": "^3.0.3",
     "nunjucks": "^2.4.1",
     "stylus": "^0.53.0",

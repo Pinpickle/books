@@ -7,8 +7,7 @@ var path = require('path');
 var handlebars = require('handlebars');
 var Promise = require('bluebird');
 var fm = require('front-matter');
-var katex = require('katex');
-var textzilla = require('texzilla');
+var mjAPI = require("mathjax-node/lib/mj-page.js");
 var markdown = require('markdown-it')({
   html: true,
   linkify: true,
@@ -26,16 +25,22 @@ var markdown = require('markdown-it')({
   .use(require('markdown-it-footnote'))
   .use(require('markdown-it-math'), {
     inlineRenderer: function(str) {
-      return katex.renderToString(str);
+      return `\\(${str}\\)`;
     },
     blockRenderer: function(str) {
-      var str = katex.renderToString(str, { displayMode: true });
-      return str;
+      return `\\[${str}\\]`;
     }
   });
 
 
 var loadFile = Promise.promisify(fs.readFile);
+
+mjAPI.config({
+  CommonHTML: {
+    scale: 120
+  }
+});
+mjAPI.start();
 
 // Load resources
 var resources = { };
@@ -82,7 +87,13 @@ exports.renderHTML = function renderHTML(md) {
   }
 
   return p.then(() => new Promise((resolve, reject) => {
-    resolve(resources.template({ styles: extra.css || resources.css, content: markdown.render(md) }));
+    mjAPI.typeset({
+      html: markdown.render(md),
+      renderer: "CommonHTML",
+      inputs: ["TeX"],
+    }, function(result) {
+      resolve(resources.template({ styles: resources.css, content: result.html }));
+    });
   }));
 };
 
